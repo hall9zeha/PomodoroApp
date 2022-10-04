@@ -8,9 +8,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.barryzeha.pomodoroapp.R
 import com.barryzeha.pomodoroapp.common.changueIcon
 import com.barryzeha.pomodoroapp.databinding.FragmentMainBinding
+import com.barryzeha.pomodoroapp.databinding.NewTaskBinding
+import com.barryzeha.pomodoroapp.model.TaskModel
+import com.barryzeha.pomodoroapp.viewModel.TaskViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.DecimalFormat
+import java.util.Calendar
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -24,9 +31,14 @@ class MainFragment : Fragment() {
 
     private  var _bind:FragmentMainBinding ? = null
     private val bind get() = _bind
+    private val taskViewModel:TaskViewModel by viewModels()
     private lateinit var timer:CountDownTimer
     private var isPlay=false
     private var minutesResume=0L
+    private lateinit var taskModel:TaskModel
+    private var initTimestamp:Long?=null
+    private var endTimestamp:Long?=null
+    private var totalTime:Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,19 +64,21 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        taskModel= TaskModel()
         setUpTimer(2,0)
         setUpListeners()
 
     }
 
 
-
     private fun setUpListeners()=with(bind) {
         this?.let{ bind->
             btnStart.setOnClickListener {
+                initTimestamp?.let{initTimestamp=Calendar.getInstance().timeInMillis}
                 if(!isPlay){
                     btnStart.changueIcon(bind,true)
                     timer.start()
+
                     isPlay=true
                 }
                 else{
@@ -75,14 +89,16 @@ class MainFragment : Fragment() {
                 }
             }
             btnStop.setOnClickListener {
-
+                endTimestamp?.let{endTimestamp=Calendar.getInstance().timeInMillis}
                 isPlay=false
                 timer.cancel()
                 setUpTimer(2,0)
                 timer.onFinish()
             }
             btnNext.setOnClickListener {  }
+            fabAddTask.setOnClickListener{addNewTaskDialog()}
         }
+
     }
 
     private fun setUpTimer(minutes:Int,seconds:Int)= with(bind) {
@@ -103,6 +119,7 @@ class MainFragment : Fragment() {
                 minutesResume=millis
                 val sec = (millis / 1000) % 60
                 Log.e("Minutes", min.toString())
+
                 pbTimer.progress = (millis.toInt() * 100) / minutesInMillis.toInt()
                 tvMainCycle.text = "${formatTime.format(min)}:${formatTime.format(sec)}"
             }
@@ -117,6 +134,16 @@ class MainFragment : Fragment() {
         }
         //timer.start()
         }
+    }
+    private fun addNewTaskDialog(){
+        val bindDialog=NewTaskBinding.inflate(layoutInflater)
+      MaterialAlertDialogBuilder(requireActivity())
+           .setMessage(R.string.addNewTask)
+           .setView(bindDialog.root)
+           .setPositiveButton(R.string.createTask
+           ) { dialog, p1 -> taskModel.taskName=bindDialog.edtNewTask.text.toString() }
+           .setNegativeButton(R.string.cancel,null)
+           .show()
     }
     companion object {
 
