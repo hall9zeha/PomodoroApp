@@ -11,10 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PomodoroApp"
+        android:name=".MyApp"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".view.MainActivity"
+            android:exported="true"
+            android:theme="@style/SplashScreenLemon">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
