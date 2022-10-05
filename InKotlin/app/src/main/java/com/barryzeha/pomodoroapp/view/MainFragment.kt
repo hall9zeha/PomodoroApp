@@ -177,7 +177,7 @@ class MainFragment : Fragment() {
             }
 
             override fun onFinish() {
-                //timer.cancel()
+               
 
                 resetUI()
                if(workCyclesNum >1) {
