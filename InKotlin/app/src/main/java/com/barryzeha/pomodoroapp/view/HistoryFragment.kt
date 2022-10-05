@@ -5,25 +5,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.barryzeha.pomodoroapp.R
-import com.barryzeha.pomodoroapp.viewModel.TaskViewModel
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.barryzeha.pomodoroapp.common.util.Scoped
+import com.barryzeha.pomodoroapp.databinding.FragmentHistoryBinding
+import com.barryzeha.pomodoroapp.model.TaskModel
+import com.barryzeha.pomodoroapp.model.adapters.HistoryAdapter
+import com.barryzeha.pomodoroapp.viewModel.HistoryViewModel
+import kotlinx.coroutines.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class HistoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
-    private val taskViewModel:TaskViewModel by viewModels()
+    private val historyViewModel:HistoryViewModel by viewModels()
+    private var bind:FragmentHistoryBinding?=null
+    private lateinit var historyAdapter:HistoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,20 +40,51 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false)
+        activity?.let{
+            bind = FragmentHistoryBinding.inflate(inflater,container,false)
+            bind?.let{
+                return it.root
+            }
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViewModel()
+        setUpAdapter()
+
+    }
+
+    private fun setUpAdapter()=with(bind){
+        this?.let{
+            historyAdapter= HistoryAdapter()
+            rvHistory.apply {
+                setHasFixedSize(true)
+                layoutManager=LinearLayoutManager(requireActivity())
+                adapter=historyAdapter
+            }
+        }
+
+    }
+
+    private fun deleteTaskHistory(taskModel: TaskModel){
+
+    }
+
+    private fun setupViewModel() {
+        CoroutineScope(Dispatchers.Main).launch {
+            historyViewModel.getAllTask().observe(viewLifecycleOwner
+            ) { historial ->
+
+                historyAdapter.add(historial)
+            }
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HistoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             HistoryFragment().apply {
@@ -60,4 +94,6 @@ class HistoryFragment : Fragment() {
                 }
             }
     }
+
+
 }

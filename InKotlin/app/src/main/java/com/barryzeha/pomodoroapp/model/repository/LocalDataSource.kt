@@ -1,5 +1,6 @@
 package com.barryzeha.pomodoroapp.model.repository
 
+import androidx.lifecycle.MutableLiveData
 import com.barryzeha.pomodoroapp.model.TaskModel
 
 /****
@@ -9,5 +10,5 @@ import com.barryzeha.pomodoroapp.model.TaskModel
  ***/
 interface LocalDataSource {
     suspend fun saveTask(taskModel:TaskModel)
-    suspend fun getAllTask():List<TaskModel>
+    suspend fun getAllTask():MutableLiveData<List<TaskModel>>
 }

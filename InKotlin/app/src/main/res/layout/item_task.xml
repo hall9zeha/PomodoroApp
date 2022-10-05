@@ -16,7 +16,7 @@
             android:layout_width="@dimen/common_padding_max"
             android:layout_height="@dimen/common_padding_max"
             android:id="@+id/ivTaskLemon"
-            android:src="@drawable/lemon2"
+            tools:src="@drawable/lemon2"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,8 +25,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvCreateTask"
-            tools:text="Tarea creada: 12/10/2022"
+            android:id="@+id/tvTaskName"
+            tools:text="Nombre de la tarea"
+            android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/ivTaskLemon"
             app:layout_constraintTop_toTopOf="@id/ivTaskLemon"
             android:layout_marginStart="@dimen/common_padding_default"
@@ -34,10 +35,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/tvCreateTask"
+            tools:text="Tarea creada: 12/10/2022"
+            app:layout_constraintStart_toEndOf="@id/ivTaskLemon"
+            app:layout_constraintTop_toBottomOf="@id/tvTaskName"
+            android:layout_marginStart="@dimen/common_padding_default"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvEndTask"
+            tools:text="fianalizado 12/10/2022"
+            app:layout_constraintStart_toEndOf="@id/ivTaskLemon"
+            app:layout_constraintTop_toBottomOf="@id/tvCreateTask"
+            android:layout_marginStart="@dimen/common_padding_default"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/tvCyclesCompleted"
             tools:text="Ciclos completados 4"
             app:layout_constraintStart_toStartOf="@id/tvCreateTask"
-            app:layout_constraintTop_toBottomOf="@id/tvCreateTask"
+            app:layout_constraintTop_toBottomOf="@id/tvEndTask"
 
             />
         <TextView
@@ -52,7 +70,7 @@
             android:layout_height="@dimen/common_padding_high"
             android:id="@+id/ivDelete"
             android:src="@drawable/ic_delete"
-            android:tint="@color/green_700"
+            app:tint="@color/green_700"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

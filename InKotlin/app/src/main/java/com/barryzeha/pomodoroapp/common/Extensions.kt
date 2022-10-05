@@ -1,8 +1,11 @@
 package com.barryzeha.pomodoroapp.common
 
 import android.widget.Button
+import android.widget.ImageView
 import com.barryzeha.pomodoroapp.R
 import com.barryzeha.pomodoroapp.databinding.FragmentMainBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 /****
  * Project PomodoroApp
@@ -22,4 +25,11 @@ fun Button.changueIcon(bind:FragmentMainBinding, play:Boolean){
 
     }
 
+}
+fun ImageView.loadUrl(res:Int){
+    Glide.with(context)
+        .load(res)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .centerCrop()
+        .into(this)
 }

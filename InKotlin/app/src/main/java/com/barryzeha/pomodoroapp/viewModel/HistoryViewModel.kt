@@ -1,7 +1,6 @@
 package com.barryzeha.pomodoroapp.viewModel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.barryzeha.pomodoroapp.common.util.ScopedViewModel
 import com.barryzeha.pomodoroapp.model.TaskModel
 import com.barryzeha.pomodoroapp.model.repository.LocalDataSource
@@ -13,9 +12,9 @@ import kotlinx.coroutines.launch
  * Created by Barry Zea H. on 04/10/2022
  * Copyright (c)  All rights reserved.
  ***/
-class TaskViewModel: ScopedViewModel() {
+class HistoryViewModel: ScopedViewModel() {
     private val localDataSource:LocalDataSource = LocalDataSourceImpl()
-    private val taskList:MutableLiveData<List<TaskModel>> = MutableLiveData()
+    private var taskList:MutableLiveData<List<TaskModel>> = MutableLiveData()
 
 
     init {
@@ -26,12 +25,9 @@ class TaskViewModel: ScopedViewModel() {
             localDataSource.saveTask(taskModel)
         }
     }
-    fun getAllTask():MutableLiveData<List<TaskModel>>{
-        launch {
-            taskList.postValue(localDataSource.getAllTask())
-        }
-        return taskList
-    }
+    suspend fun getAllTask():MutableLiveData<List<TaskModel>>{
+        return localDataSource.getAllTask()
+          }
 
     override fun onCleared() {
         destroyScope()

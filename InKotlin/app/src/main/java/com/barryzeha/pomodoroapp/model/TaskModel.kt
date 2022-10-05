@@ -14,7 +14,8 @@ data class TaskModel(
     var taskName:String="",
     var initTaskTimestamp:Long=0L,
     var endTaskTimestamp:Long=0L,
-    val totalTime:Long=0L
+    var totalCycles:Int=0,
+    var totalTime:Long=0L
     ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -21,4 +21,10 @@
     <string name="addOneTask">Dale nombre a la tarea</string>
     <string name="createTask">Crear</string>
     <string name="cancel">Cancelar</string>
+    <string name="workAndbreak">Tiempo de trabajos y descansos</string>
+    <string name="CycleWorkTime">Ciclo de trabajo(Minutos)</string>
+    <string name="CycleBreakTime">Ciclo de descanso(minutos)</string>
+    <string name="lastCycleTime">Último ciclo de descanso(minutos)</string>
+    <string name="workCycles">Ciclos de trabajo</string>
+    <string name="numCyclesWork">Ciclos de trabajo</string>
 </resources>
