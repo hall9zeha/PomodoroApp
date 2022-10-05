@@ -56,7 +56,6 @@
             tools:text="Ciclos completados 4"
             app:layout_constraintStart_toStartOf="@id/tvCreateTask"
             app:layout_constraintTop_toBottomOf="@id/tvEndTask"
-
             />
         <TextView
             android:layout_width="wrap_content"
