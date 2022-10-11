@@ -14,7 +14,7 @@
         <item name="actionBarStyle">@style/MyToolbarStyle</item>
         <!-- Customize your theme here. -->
     </style>
-    <style name="buttonsTimerStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="buttonsTimerStyle" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="iconSize">40dp</item>
         <item name="iconGravity">textStart</item>
         <item name="strokeColor">@color/green_700</item>

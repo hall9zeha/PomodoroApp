@@ -6,15 +6,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardTaskItem"
     android:layout_margin="@dimen/common_padding_min"
-    android:padding="@dimen/common_padding_default">
+    android:padding="@dimen/common_padding_default"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/common_padding_min"
         >
         <ImageView
-            android:layout_width="@dimen/common_padding_max"
-            android:layout_height="@dimen/common_padding_max"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:id="@+id/ivTaskLemon"
             tools:src="@drawable/lemon2"
             android:scaleType="centerCrop"
@@ -29,7 +33,7 @@
             tools:text="Nombre de la tarea"
             android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/ivTaskLemon"
-            app:layout_constraintTop_toTopOf="@id/ivTaskLemon"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/common_padding_default"
             />
         <TextView

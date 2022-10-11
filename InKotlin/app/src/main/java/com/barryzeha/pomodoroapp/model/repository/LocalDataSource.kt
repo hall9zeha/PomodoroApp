@@ -11,4 +11,7 @@ import com.barryzeha.pomodoroapp.model.TaskModel
 interface LocalDataSource {
     suspend fun saveTask(taskModel:TaskModel)
     suspend fun getAllTask():MutableLiveData<List<TaskModel>>
+    suspend fun getTask(id:Int):TaskModel
+    suspend fun deleteAll()
+    suspend fun deleteTask(id:Int)
 }

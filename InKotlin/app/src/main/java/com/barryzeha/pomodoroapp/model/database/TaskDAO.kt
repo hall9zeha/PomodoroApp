@@ -17,4 +17,10 @@ interface TaskDAO {
     fun saveTask(taskModel:TaskModel)
     @Query("select * from task_table order by endTaskTimestamp desc")
     fun getAllTask():MutableList<TaskModel>
+    @Query("select * from task_table where id =:id")
+    fun getTask(id:Int):TaskModel
+    @Query("delete  from task_table")
+    fun clearHistory()
+    @Query("delete  from task_table where id=:id")
+    fun deleteTask(id:Int)
 }

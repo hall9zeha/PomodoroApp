@@ -10,4 +10,18 @@
     <string name="lastCycleTime">Timpo del último ciclo(minutos)</string>
     <string name="workCycles">Ciclos de trabajo</string>
     <string name="numCyclesWork">Ciclos de trabajo</string>
+    <string name="youAlreagyTask">Ya hay una tarea ejecutándose</string>
+    <string name="firtAddOneTask">Primero agrega una tarea</string>
+    <string name="completedCycles">"ciclos completados: "</string>
+    <string name="created">Creada</string>
+    <string name="focusedTime">"Tiempo empleado: "</string>
+    <string name="deleteAll">Borrar todo?</string>
+    <string name="yes">Si</string>
+    <string name="notification_channel_id">Lemodoro channel</string>
+    <string name="notification_title">Lemodoro task</string>
+    <string name="notification_action">Vamos</string>
+
+    <string name="channel_name">LemodoroCh</string>
+    <string name="goRest">Tomate un descanso</string>
+    <string name="goWork">A trabajar esclavo</string>
 </resources>

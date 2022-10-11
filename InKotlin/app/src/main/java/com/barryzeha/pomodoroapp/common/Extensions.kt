@@ -1,5 +1,8 @@
 package com.barryzeha.pomodoroapp.common
 
+import android.annotation.SuppressLint
+import android.app.ActivityManager
+import android.content.Context
 import android.widget.Button
 import android.widget.ImageView
 import com.barryzeha.pomodoroapp.R
@@ -32,4 +35,11 @@ fun ImageView.loadUrl(res:Int){
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .centerCrop()
         .into(this)
+}
+
+@Suppress("DEPRECATION")
+fun <T> Context.isServiceRunning(service: Class<T>): Boolean {
+    return (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
+        .getRunningServices(Integer.MAX_VALUE)
+        .any { it.service.className == service.name }
 }

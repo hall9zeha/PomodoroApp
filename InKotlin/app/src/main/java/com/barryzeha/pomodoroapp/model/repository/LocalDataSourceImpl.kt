@@ -22,4 +22,16 @@ class LocalDataSourceImpl: LocalDataSource {
         taskList.postValue(db.getAllTask())
         return@withContext taskList
     }
+
+    override suspend fun getTask(id: Int): TaskModel = withContext(Dispatchers.IO){
+        return@withContext db.getTask(id)
+    }
+
+    override suspend fun deleteAll()= withContext(Dispatchers.IO){
+       db.clearHistory()
+    }
+
+    override suspend fun deleteTask(id: Int) = withContext(Dispatchers.IO) {
+        db.deleteTask(id)
+    }
 }

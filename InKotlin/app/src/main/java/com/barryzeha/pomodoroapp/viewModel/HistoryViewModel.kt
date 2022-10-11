@@ -29,9 +29,20 @@ class HistoryViewModel: ScopedViewModel() {
         return localDataSource.getAllTask()
           }
 
+    suspend fun deleteTask(id:Int){
+        launch{
+            localDataSource.deleteTask(id)
+        }
+    }
+    suspend fun deleteAllTask(){
+        launch {
+            localDataSource.deleteAll()
+        }
+    }
     override fun onCleared() {
         destroyScope()
         super.onCleared()
     }
+
 
 }

@@ -1,12 +1,9 @@
 package com.barryzeha.pomodoroapp.model.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.barryzeha.pomodoroapp.MyApp
 import com.barryzeha.pomodoroapp.R
 import com.barryzeha.pomodoroapp.common.loadUrl
 import com.barryzeha.pomodoroapp.common.util.Helpers
@@ -18,7 +15,7 @@ import com.barryzeha.pomodoroapp.model.TaskModel
  * Created by Barry Zea H. on 05/10/2022
  * Copyright (c)  All rights reserved.
  ***/
-class HistoryAdapter(/*private val onDelete:(task:TaskModel)->Unit*/) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>(){
+class HistoryAdapter(private val onDelete:(task:TaskModel)->Unit) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>(){
     private var historyTaskList:ArrayList<TaskModel> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,8 +24,8 @@ class HistoryAdapter(/*private val onDelete:(task:TaskModel)->Unit*/) : Recycler
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(historyTaskList[position])
-        holder.bind.ivDelete.setOnClickListener { /*onDelete(historyTaskList[position])*/}
+        holder.onBind(historyTaskList[position],onDelete)
+
     }
     fun add(historyList:List<TaskModel>){
         historyList.forEach { task->
@@ -40,25 +37,35 @@ class HistoryAdapter(/*private val onDelete:(task:TaskModel)->Unit*/) : Recycler
     }
     fun remove(task:TaskModel){
         if(historyTaskList.contains(task)){
-            historyTaskList.remove(task)
-            notifyItemRemoved(historyTaskList.indexOf(task))
+            //primero debemos obtener la posición del elemento importante hacerlo de esta forma
+            val position  = historyTaskList.indexOf(task)
+            historyTaskList.removeAt(position)
+            notifyItemRemoved(position)
         }
     }
     fun removeAll(){
-        if(historyTaskList.size>0)historyTaskList.clear()
+
+        if(historyTaskList.size>0){
+            val size=historyTaskList.count()
+            historyTaskList.clear()
+            notifyItemRangeRemoved(0,size)
+        }
+
+
     }
     override fun getItemCount(): Int = if(historyTaskList.size>0) historyTaskList.size else 0
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val bind = ItemTaskBinding.bind(itemView)
-        fun onBind(task:TaskModel)=with(bind){
-            tvTaskName.text=task.taskName
-            tvCreateTask.text=Helpers.convertTimeInMillisToDate(task.initTaskTimestamp)
-            tvEndTask.text=Helpers.convertTimeInMillisToDate(task.endTaskTimestamp)
-            tvCyclesCompleted.text=task.totalCycles.toString()
-            tvFocusedTime.text=Helpers.convertTimeInMillisToTimeFormat(task.totalTime)
-            ivTaskLemon.loadUrl(R.drawable.lemon2)
 
+        fun onBind(task: TaskModel, onDelete: (task: TaskModel) -> Unit)=with(bind){
+            tvTaskName.text=task.taskName
+            tvCreateTask.text="${root.context.getString(R.string.created)} ${Helpers.convertTimeInMillisToDate(task.initTaskTimestamp)}"
+            tvEndTask.text=Helpers.convertTimeInMillisToDate(task.endTaskTimestamp)
+            tvCyclesCompleted.text="${root.context.getString(R.string.completedCycles)} ${task.totalCycles}"
+            tvFocusedTime.text="${root.context.getString(R.string.focusedTime)} ${Helpers.convertTimeInMillisToTimeFormat(task.totalTime)}"
+            ivTaskLemon.loadUrl(R.drawable.lemon2)
+            ivDelete.setOnClickListener { onDelete(task)}
         }
     }
 
