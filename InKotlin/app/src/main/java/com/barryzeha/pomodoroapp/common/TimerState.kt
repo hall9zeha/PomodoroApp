@@ -6,7 +6,7 @@ package com.barryzeha.pomodoroapp.common
  * Copyright (c)  All rights reserved.
  ***/
 
-enum class TimerState() {
+enum class TimerState {
 
     NotStarted,
     OnStart,

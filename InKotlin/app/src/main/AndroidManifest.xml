@@ -30,7 +30,11 @@
         </activity>
         <service android:name=".common.services.MyBackgroundService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.barryzeha.pomodoroapp.common.services.MyBackgroundService"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

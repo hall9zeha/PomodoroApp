@@ -16,19 +16,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
  * Copyright (c)  All rights reserved.
  ***/
 
-
-fun Button.changueIcon(bind:FragmentMainBinding, play:Boolean){
-
-    if(play){
-        bind.btnStart.setIconResource(R.drawable.ic_pause)
-
-    }
-    else{
-        bind.btnStart.setIconResource(R.drawable.ic_play)
-
-    }
-
-}
 fun ImageView.loadUrl(res:Int){
     Glide.with(context)
         .load(res)

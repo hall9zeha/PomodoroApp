@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.barryzeha.pomodoroapp.MyApp
 import com.barryzeha.pomodoroapp.R
+import com.barryzeha.pomodoroapp.common.PomodoroTimer
 import com.barryzeha.pomodoroapp.common.TimerState
 
 import com.barryzeha.pomodoroapp.common.isServiceRunning
@@ -25,7 +26,7 @@ import com.barryzeha.pomodoroapp.databinding.NewTaskBinding
 
 import com.barryzeha.pomodoroapp.model.TaskModel
 import com.barryzeha.pomodoroapp.viewModel.HistoryViewModel
-import com.barryzeha.pomodoroapp.viewModel.TimerViewModel
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.Calendar
 
@@ -35,14 +36,13 @@ private const val ARG_PARAM2 = "param2"
 
 class MainFragment : Fragment(),ServiceConnection {
 
-
     private var param1: String? = null
     private var param2: String? = null
-
     private  var _bind: FragmentMainBinding? = null
     private val bind get() = _bind
+
     private val taskViewModel:HistoryViewModel by viewModels()
-    private val timerViewModel:TimerViewModel by viewModels()
+
     private lateinit var taskModel:TaskModel
     private var initTimestamp:Long?=null
     private var workCyclesNum=0
@@ -52,40 +52,41 @@ class MainFragment : Fragment(),ServiceConnection {
     private var timeOfLastBreakCycle=0
     private var taskName=""
     private var haveATask=false
-    private  var serviceIntent:Intent?=null
+    private var isBound=false
     private var myService:MyBackgroundService?=null
-    private var callBackTimer = object: TimerViewModel.PomodoroTimerListener{
+    private var pomodoro:PomodoroTimer?=null
+
+
+    private var callBackTimer=object :PomodoroTimer.PomodoroTimerListener {
         override fun onTick(millis: Long, percentProgress: Int) {
             super.onTick(millis, percentProgress)
+            bind?.tvMainCycle?.text=Helpers.convertTimeInMillisToTimeFormat(millis)
+            bind?.pbTimer?.progress=percentProgress
+            bind?.tvWorkCycle?.text= pomodoro?.workCyclesNum.toString()
         }
-
-        override fun onReset() {
-            super.onReset()
+        override fun onStop(valueForResetUI:Int) {
+            super.onStop(valueForResetUI)
+            bind?.tvWorkCycle?.text= valueForResetUI.toString()
+            bind?.tvMainCycle?.text=Helpers.convertTimeInMillisToTimeFormat(valueForResetUI.toLong())
+            bind?.pbTimer?.progress=valueForResetUI
         }
-
-        override fun onStart() {
-            super.onStart()
+          override fun onFinish(workCyclesNum: Int) {
+            super.onFinish(workCyclesNum)
+            bind?.tvWorkCycle?.text=workCyclesNum.toString()
         }
-
-        override fun onStop() {
-            super.onStop()
-        }
-
-        override fun onNextInterval(intervalIndex: Int) {
-            super.onNextInterval(intervalIndex)
-        }
-
-        override fun onFinish(intervalIndex: Int) {
-            super.onFinish(intervalIndex)
+           override fun timerState(timerState: TimerState) {
+            super.timerState(timerState)
+            updateUIButtons(timerState)
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-       // setHasOptionsMenu(true)
+
     }
 
     override fun onCreateView(
@@ -93,73 +94,55 @@ class MainFragment : Fragment(),ServiceConnection {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        activity?.let{
-            _bind= FragmentMainBinding.inflate(inflater,container,false)
-            bind?.let {
-                return it.root
-            }
-        }
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+            _bind= FragmentMainBinding.inflate(inflater,container,false)
+            return bind?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         taskModel= TaskModel()
-
-        timerViewModel.initValues()
-
+        getPreferencesOfPomodoro()
         enableStopAndNextButton(false)
         setUpListeners()
-        setUpPreferencesOfPomodoro()
-        observersViewModelProperties()
         Helpers.createNotificationChannel(getString(R.string.notification_channel_id),getString(R.string.channel_name))
         Log.e("SERVICE",    requireContext().isServiceRunning(MyBackgroundService::class.java).toString() )
     }
 
 
-
-    private fun observersViewModelProperties()=with(bind) {
-        this?.let {
-            timerViewModel.timerState.observe(viewLifecycleOwner) {
-                when (it) {
-                    TimerState.OnStart -> {
-                        btnStart.setIconResource(R.drawable.ic_pause)
-                        enableStopAndNextButton(true)
-                    }
-                    TimerState.OnPause->btnStart.setIconResource(R.drawable.ic_play)
-                    TimerState.OnStop->{
-                        saveHistoryTask()
-                        btnStart.setIconResource(R.drawable.ic_play)
-                        enableStopAndNextButton(false)
-                        Helpers.notificationManager?.cancelAll()
-                    }
-                    TimerState.CompletedTask-> {
-                        Toast.makeText(context, "A descansar", Toast.LENGTH_SHORT).show()
-                        //Helpers.sendNotification(getString(R.string.goRest))
-                    }
-
-                    TimerState.CompletedBreak->{
-                        Toast.makeText(context, "A trabajar", Toast.LENGTH_SHORT).show()
-                        //Helpers.sendNotification(getString(R.string.goWork))
-                    }
-                    else->{}
+  private fun updateUIButtons(timerState: TimerState)= with(bind){
+        this?.let{
+            when (timerState) {
+                TimerState.OnStart -> {
+                    btnStart.setIconResource(R.drawable.ic_pause)
+                    enableStopAndNextButton(true)
                 }
-                tvWorkCycle.text=timerViewModel.workCyclesNum.value.toString()
-            }
-            timerViewModel.progressAnimator.observe(viewLifecycleOwner) {progress->
-                pbTimer.progress = progress
-            }
-            timerViewModel.textTimerProgress.observe(viewLifecycleOwner){
-                   tvMainCycle.text=Helpers.convertTimeInMillisToTimeFormat(it)
+                TimerState.OnPause->btnStart.setIconResource(R.drawable.ic_play)
+                TimerState.OnStop->{
+                    saveHistoryTask()
+                    btnStart.setIconResource(R.drawable.ic_play)
+                    enableStopAndNextButton(false)
+                    Helpers.notificationManager?.cancelAll()
+                }
+                TimerState.CompletedTask-> {
+                    Toast.makeText(context, "A descansar", Toast.LENGTH_SHORT).show()
+                    //Helpers.sendNotification(getString(R.string.goRest))
+                }
+
+                TimerState.CompletedBreak->{
+                    Toast.makeText(context, "A trabajar", Toast.LENGTH_SHORT).show()
+                    //Helpers.sendNotification(getString(R.string.goWork))
+                }
+                else->{}
             }
         }
-    }
+
+}
+
     private fun setUpListeners()=with(bind) {
         this?.let{ bind->
             btnStart.setOnClickListener {
-
-                when (timerViewModel.timerState.value) {
+                when (myService?.pomodoro?.timerState) {
                     TimerState.NotStarted -> {
                         if (!haveATask) {
                             Toast.makeText(
@@ -169,18 +152,22 @@ class MainFragment : Fragment(),ServiceConnection {
                             ).show()
                         } else {
                             initTimestamp = Calendar.getInstance().timeInMillis
-                            timerViewModel.workCyclesNum.value=MyApp.prefsDefault.getString("numCycles","4")!!.toInt()
-                            timerViewModel.cyclesBreakCount.value=MyApp.prefsDefault.getString("numCycles","4")!!.toInt()
-                            timerViewModel.startTimer(0, 10)
+
+                            myService?.pomodoro?.workCyclesNum=MyApp.prefsDefault.getString("numCycles","4")!!.toInt()
+                            myService?.pomodoro?.breakCyclesNum=MyApp.prefsDefault.getString("numCycles","4")!!.toInt()
+
+                            myService?.pomodoro?.startTimer(0, 10)
                         }
                     }
                     TimerState.OnStart -> {
-                        timerViewModel.timer.cancel()
-                        timerViewModel.timerState.value = TimerState.OnPause
+                        myService?.pomodoro?.timer?.cancel()
+                        myService?.pomodoro?.timerState = TimerState.OnPause
+                        pomodoro?.pomodoroCallback?.timerState(TimerState.OnPause)
                     }
                     TimerState.OnPause -> {
-                        timerViewModel.startTimer(0, 10)
-                        timerViewModel.timerState.value = TimerState.OnStart
+                        myService?.pomodoro?.startTimer(0, 10)
+                        myService?.pomodoro?.timerState = TimerState.OnStart
+                        pomodoro?.pomodoroCallback?.timerState(TimerState.OnStart)
                     }
                     TimerState.OnStop -> {
                         saveHistoryTask()
@@ -189,17 +176,20 @@ class MainFragment : Fragment(),ServiceConnection {
                 }
             }
             btnStop.setOnClickListener {
-                timerViewModel.endTimestamp.value=Calendar.getInstance().timeInMillis
-                timerViewModel.stopTimer()
+                myService?.pomodoro?.endTimestamp=Calendar.getInstance().timeInMillis
+                myService?.pomodoro?.stopTimer()
             }
             btnNext.setOnClickListener {
-                timerViewModel.nextCycle()
+                myService?.pomodoro?.nextCycle()
             }
             fabAddTask.setOnClickListener{
-                if(timerViewModel.workCyclesNum.value!! >0){
+
+                if(myService?.pomodoro?.workCyclesNum!! > 0){
                     Toast.makeText(context, activity?.getString(R.string.youAlreagyTask), Toast.LENGTH_SHORT).show()
                 }else{
                 addNewTaskDialog()}
+
+
             }
         }
     }
@@ -211,7 +201,7 @@ class MainFragment : Fragment(),ServiceConnection {
         }
     }
 
-    private fun setUpPreferencesOfPomodoro(){
+    private fun getPreferencesOfPomodoro(){
 
         timeOfCycleWork=MyApp.prefsDefault.getString("workTime","25")!!.toInt()
         timeOfCycleBreak=MyApp.prefsDefault.getString("breakTime","5")!!.toInt()
@@ -219,17 +209,16 @@ class MainFragment : Fragment(),ServiceConnection {
         timeOfLastBreakCycle=MyApp.prefsDefault.getString("breakLastTime","15")!!.toInt()
         breakCyclesNum=workCyclesNum - 1
 
-        bind?.tvWorkCycle?.text=workCyclesNum.toString()
+
     }
     private fun saveHistoryTask(){
 
             taskModel.initTaskTimestamp = initTimestamp!!
-            taskModel.endTaskTimestamp = timerViewModel.endTimestamp.value!!
+            taskModel.endTaskTimestamp = pomodoro?.endTimestamp!!
             taskModel.taskName = taskName
-            taskModel.totalCycles = MyApp.prefsDefault.getString("numCycles","4")!!.toInt() - timerViewModel.workCyclesCount.value!!
-            taskModel.totalTime = timerViewModel.totalTime.value!! - 1000
-        Log.e("ERROR",MyApp.prefsDefault.getString("numCycles","4")!!.toString())
-        Log.e("ERROR",timerViewModel.workCyclesCount.value!!.toString())
+            taskModel.totalCycles = MyApp.prefsDefault.getString("numCycles","4")!!.toInt() - pomodoro?.workCyclesCount!!
+            taskModel.totalTime = pomodoro?.totalTime!! - 1000
+
             try {
                 taskViewModel.saveTask(taskModel)
                 Toast.makeText(context, "Historial guardado", Toast.LENGTH_SHORT).show()
@@ -258,74 +247,60 @@ class MainFragment : Fragment(),ServiceConnection {
            .show()
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MainFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 
     override fun onServiceConnected(p0: ComponentName?, service: IBinder?) {
         val binder = service as  MyBackgroundService.MyLocalBinder
+        isBound=true
         myService = binder.getService()
+        myService?.initInstance()
+        myService?.initPomodoroListener()
+        myService?.registerOnPomodoroListener(callBackTimer)
+        pomodoro = myService?.pomodoro
+        pomodoro?.initValues()
+
     }
 
     override fun onServiceDisconnected(p0: ComponentName?) {
+        isBound=false
 
+    }
+    private fun unbindSafe(){
+        if(isBound){
+            requireContext().unbindService(this)
+            isBound=false
+        }
     }
     override fun onStart() {
         super.onStart()
         //Iniciamos el servicio
-        Toast.makeText(context, "ON-START", Toast.LENGTH_SHORT).show()
+
         if(!requireContext().isServiceRunning(MyBackgroundService::class.java)) {
             requireContext().bindService(Intent(requireContext(), MyBackgroundService::class.java),
                 this,
                 Context.BIND_AUTO_CREATE
             )
-
-        }
-        else{
-            requireContext().unbindService(this)
-            myService?.stopSelf()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //myService?.stopSelf()
-
-        myService?.getDataFromServiceUnbinded()
-        Toast.makeText(context, "ON-RESUME", Toast.LENGTH_SHORT).show()
-        if(MyApp.localPrefs.timerState==TimerState.NotStarted.name){
-            timerViewModel.initValues()
-        }else if(MyApp.localPrefs.timerState==TimerState.OnPause.name){
-            Toast.makeText(context, TimerState.OnPause.name, Toast.LENGTH_SHORT).show()
-            timerViewModel.onResume()
+            myService?.registerOnPomodoroListener(callBackTimer)
         }
 
     }
-    override fun onPause() {
-        super.onPause()
 
-        if(timerViewModel.timerState.value==TimerState.OnStart) {
-            timerViewModel.onPause()
-            myService?.getValuesOfSharedPrefs()
-            myService?.initTimerBackground(0,10)
-
-        }
-
-
+    override fun onStop() {
+        super.onStop()
+        //Si detenemos el servicio aquí no habra funcionamiento en segundo plano de las notificaciones
+      /*  myService?.unregisterPomodoroListener()
+        unbindSafe()*/
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
-        //desconectamos el fragment del servicio y lo detenemos
-        requireContext().unbindService(this)
+        _bind=null
         myService?.stopSelf()
+        myService?.unregisterPomodoroListener()
+        //desconectamos el fragment del servicio y lo detenemos
+        unbindSafe()
+
 
     }
 }
