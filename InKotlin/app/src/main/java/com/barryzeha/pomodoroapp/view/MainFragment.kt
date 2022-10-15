@@ -61,7 +61,9 @@ class MainFragment : Fragment(),ServiceConnection {
         override fun onTick(millis: Long, percentProgress: Int) {
             super.onTick(millis, percentProgress)
             bind?.tvMainCycle?.text=Helpers.convertTimeInMillisToTimeFormat(millis)
-            bind?.pbTimer?.progress=percentProgress
+
+            //bind?.pbTimer?.progress= bind?.pbTimer?.progress!! - percentProgress
+            bind?.pbTimer?.progress= percentProgress
             bind?.tvWorkCycle?.text= pomodoro?.workCyclesNum.toString()
         }
         override fun onStop(valueForResetUI:Int) {
@@ -78,6 +80,7 @@ class MainFragment : Fragment(),ServiceConnection {
             super.timerState(timerState)
             updateUIButtons(timerState)
         }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,6 +106,7 @@ class MainFragment : Fragment(),ServiceConnection {
         super.onViewCreated(view, savedInstanceState)
         taskModel= TaskModel()
         getPreferencesOfPomodoro()
+
         enableStopAndNextButton(false)
         setUpListeners()
         Helpers.createNotificationChannel(getString(R.string.notification_channel_id),getString(R.string.channel_name))

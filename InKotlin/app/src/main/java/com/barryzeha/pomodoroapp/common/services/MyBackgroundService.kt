@@ -69,6 +69,8 @@ class MyBackgroundService: Service() {
                 super.timerState(timerState)
                 clientCallback?.timerState(timerState)
             }
+
+
         }
     }
     fun registerOnPomodoroListener(callback: PomodoroTimer.PomodoroTimerListener) {

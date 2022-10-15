@@ -2,8 +2,10 @@ package com.barryzeha.pomodoroapp.common
 
 import android.annotation.SuppressLint
 import android.os.CountDownTimer
+import android.util.Log
 import com.barryzeha.pomodoroapp.MyApp
 import java.util.*
+import javax.security.auth.login.LoginException
 
 /****
  * Project PomodoroApp
@@ -26,7 +28,12 @@ class PomodoroTimer {
     var endTimestamp:Long=0
 
 
+
     fun startTimer(minutes:Int, seconds:Int){
+        //usamos esta constante para sacar el porcentaje del progress bar
+        //ya que al no variar dentro del temporizador podremos pausar y reanudar el progressbar correctamente
+        val initialTimeOfCycle=((seconds * 1000) + 1000).toLong()
+        //***********************************************************
 
         var minutesInMillis: Long=((seconds *1000) + 1000).toLong()
 
@@ -52,11 +59,12 @@ class PomodoroTimer {
         timer = object : CountDownTimer(minutesInMillis, 1000) {
             @SuppressLint("SetTextI18n")
             override fun onTick(millis: Long) {
-                //capturamos el tiempo para cuando se detenga el timer
-                val progressValue=(millis.toInt()  * 100) / minutesInMillis.toInt()
+               //capturamos el tiempo para cuando se detenga el timer
                 timeResume=millis
-                //guardamos el porcentaje para actualizar constantemente el progressIndicator
-                pomodoroCallback?.onTick(millis, progressValue)
+               //var progressValue=(millis.toInt()  * 100) / minutesInMillis.toInt()
+               val progressValue=(millis.toInt()  * 100) / initialTimeOfCycle.toInt()
+               //guardamos el porcentaje para actualizar constantemente el progressIndicator
+               pomodoroCallback?.onTick(millis,progressValue)
          }
 
             override fun onFinish() {
@@ -82,9 +90,11 @@ class PomodoroTimer {
                 }
             }
         }
+
         timer?.start()
 
     }
+
     private fun switchWorkAndBreakCycle(){
         if(isWorkTime){
             workCyclesNum -= 1
@@ -97,7 +107,6 @@ class PomodoroTimer {
 
         if(isWorkTime){
             //Seteamos es valor del enum para que el observador en el fragment sepa que mensaje mostrar
-            //timerState= TimerState.CompletedBreak
             pomodoroCallback?.timerState(TimerState.CompletedBreak)
             startTimer(0,10)
             isWorkTime=true
@@ -105,10 +114,8 @@ class PomodoroTimer {
         else {
             //Seteamos es valor del enum para que el observador en el fragment sepa que mensaje mostrar
             pomodoroCallback?.timerState(TimerState.CompletedTask)
-            //timerState= TimerState.CompletedTask
             if(workCyclesNum == 0)startTimer(0,7) else startTimer(0,5)
 
-            //startTimer(0,5)
             isWorkTime=false
         }
 
@@ -119,14 +126,14 @@ class PomodoroTimer {
             switchWorkAndBreakCycle()
             timer?.cancel()
             isWorkTime = true
-            breakCyclesNum  = breakCyclesNum - 1
+            breakCyclesNum -= 1
             initTimer()
         }
         else{
-            //workCyclesNum.value= 0
+
             stopTimer()
             // TODO:  mensaje
-            //Toast.makeText(context, "No hay más ciclos de trabajo", Toast.LENGTH_SHORT).show()
+
         }
     }
 
@@ -151,16 +158,15 @@ class PomodoroTimer {
         pomodoroCallback?.onStop(0)
         totalTime=0
         progressAnimator=0
-        //_cyclesBreakCount.value=MyApp.prefsDefault.getString("numCycles","4")!!.toInt() - 1
+
         breakCyclesNum=0
 
-        //Reiniciamos la preferencia local que corresponde al estado del timer en el servicio en segundo plano
-        MyApp.localPrefs.timerState=""
     }
     interface PomodoroTimerListener{
         fun onTick(millis:Long, percentProgress:Int){}
         fun onStop(valueForResetUI:Int){}
         fun onFinish(workCyclesNum:Int){}
         fun timerState(timerState:TimerState){}
+
     }
 }
