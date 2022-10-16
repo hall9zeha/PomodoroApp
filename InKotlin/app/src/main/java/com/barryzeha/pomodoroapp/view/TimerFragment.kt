@@ -7,38 +7,30 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.barryzeha.pomodoroapp.MyApp
 import com.barryzeha.pomodoroapp.R
 import com.barryzeha.pomodoroapp.common.PomodoroTimer
 import com.barryzeha.pomodoroapp.common.TimerState
-
 import com.barryzeha.pomodoroapp.common.isServiceRunning
 import com.barryzeha.pomodoroapp.common.services.MyBackgroundService
 import com.barryzeha.pomodoroapp.common.util.Helpers
-import com.barryzeha.pomodoroapp.databinding.FragmentMainBinding
+import com.barryzeha.pomodoroapp.databinding.FragmentTimerBinding
 import com.barryzeha.pomodoroapp.databinding.NewTaskBinding
-
 import com.barryzeha.pomodoroapp.model.TaskModel
 import com.barryzeha.pomodoroapp.viewModel.HistoryViewModel
-
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import java.util.Calendar
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import java.util.*
 
 
 class MainFragment : Fragment(),ServiceConnection {
 
-    private var param1: String? = null
-    private var param2: String? = null
-    private  var _bind: FragmentMainBinding? = null
+    private  var _bind: FragmentTimerBinding? = null
     private val bind get() = _bind
 
     private val taskViewModel:HistoryViewModel by viewModels()
@@ -61,8 +53,6 @@ class MainFragment : Fragment(),ServiceConnection {
         override fun onTick(millis: Long, percentProgress: Int) {
             super.onTick(millis, percentProgress)
             bind?.tvMainCycle?.text=Helpers.convertTimeInMillisToTimeFormat(millis)
-
-            //bind?.pbTimer?.progress= bind?.pbTimer?.progress!! - percentProgress
             bind?.pbTimer?.progress= percentProgress
             bind?.tvWorkCycle?.text= pomodoro?.workCyclesNum.toString()
         }
@@ -81,31 +71,30 @@ class MainFragment : Fragment(),ServiceConnection {
             updateUIButtons(timerState)
         }
 
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        override fun cycleState(isWorkTime: Boolean) {
+            super.cycleState(isWorkTime)
+            if(isWorkTime){
+                bind?.tvCycleState?.text=getString(R.string.working)
+            }
+            else{
+                bind?.tvCycleState?.text=getString(R.string.rest)
+            }
         }
-
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
-            _bind= FragmentMainBinding.inflate(inflater,container,false)
+            _bind= FragmentTimerBinding.inflate(inflater,container,false)
             return bind?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         taskModel= TaskModel()
-        getPreferencesOfPomodoro()
 
         enableStopAndNextButton(false)
         setUpListeners()
@@ -157,8 +146,8 @@ class MainFragment : Fragment(),ServiceConnection {
                         } else {
                             initTimestamp = Calendar.getInstance().timeInMillis
 
-                            myService?.pomodoro?.workCyclesNum=MyApp.prefsDefault.getString("numCycles","4")!!.toInt()
-                            myService?.pomodoro?.breakCyclesNum=MyApp.prefsDefault.getString("numCycles","4")!!.toInt()
+                            myService?.pomodoro?.workCyclesNum=MyApp.prefsDefault.getInt("numCycles",4)!!.toInt()
+                            myService?.pomodoro?.breakCyclesNum=MyApp.prefsDefault.getInt("numCycles",4)!!.toInt()
 
                             myService?.pomodoro?.startTimer(0, 10)
                         }
@@ -207,10 +196,10 @@ class MainFragment : Fragment(),ServiceConnection {
 
     private fun getPreferencesOfPomodoro(){
 
-        timeOfCycleWork=MyApp.prefsDefault.getString("workTime","25")!!.toInt()
-        timeOfCycleBreak=MyApp.prefsDefault.getString("breakTime","5")!!.toInt()
-        workCyclesNum=MyApp.prefsDefault.getString("numCycles","4")!!.toInt()
-        timeOfLastBreakCycle=MyApp.prefsDefault.getString("breakLastTime","15")!!.toInt()
+        timeOfCycleWork=MyApp.prefsDefault.getInt("workTime",25)!!.toInt()
+        timeOfCycleBreak=MyApp.prefsDefault.getInt("breakTime",5)!!.toInt()
+        workCyclesNum=MyApp.prefsDefault.getInt("numCycles",4)!!.toInt()
+        timeOfLastBreakCycle=MyApp.prefsDefault.getInt("breakLastTime",15)!!.toInt()
         breakCyclesNum=workCyclesNum - 1
 
 
@@ -220,7 +209,7 @@ class MainFragment : Fragment(),ServiceConnection {
             taskModel.initTaskTimestamp = initTimestamp!!
             taskModel.endTaskTimestamp = pomodoro?.endTimestamp!!
             taskModel.taskName = taskName
-            taskModel.totalCycles = MyApp.prefsDefault.getString("numCycles","4")!!.toInt() - pomodoro?.workCyclesCount!!
+            taskModel.totalCycles = MyApp.prefsDefault.getInt("numCycles",4)!!.toInt() - pomodoro?.workCyclesCount!!
             taskModel.totalTime = pomodoro?.totalTime!! - 1000
 
             try {
@@ -289,6 +278,10 @@ class MainFragment : Fragment(),ServiceConnection {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        getPreferencesOfPomodoro()
+    }
     override fun onStop() {
         super.onStop()
         //Si detenemos el servicio aquí no habra funcionamiento en segundo plano de las notificaciones

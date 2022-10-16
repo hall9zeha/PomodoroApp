@@ -1,36 +1,52 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="@string/workAndbreak">
+    <PreferenceCategory app:title="@string/workAndbreak"
+        app:iconSpaceReserved="false">
 
-        <EditTextPreference
+        <SeekBarPreference
             app:key="workTime"
+            android:max="60"
             app:title="@string/CycleWorkTime"
             app:useSimpleSummaryProvider="true"
             app:defaultValue="25"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:showSeekBarValue="true"
             />
 
-        <EditTextPreference
+        <SeekBarPreference
             app:key="breakTime"
             app:title="@string/CycleBreakTime"
             app:useSimpleSummaryProvider="true"
             app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:showSeekBarValue="true"
             />
-        <EditTextPreference
+        <SeekBarPreference
             app:key="breakLastTime"
             app:title="@string/lastCycleTime"
             app:useSimpleSummaryProvider="true"
             app:defaultValue="15"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:showSeekBarValue="true"
             />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/workCycles">
+    <PreferenceCategory app:title="@string/workCycles"
+        app:iconSpaceReserved="false">
 
-        <EditTextPreference
+        <SeekBarPreference
             app:key="numCycles"
             app:title="@string/numCyclesWork"
             app:useSimpleSummaryProvider="true"
             app:defaultValue="4"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:showSeekBarValue="true"
             />
 
 

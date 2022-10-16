@@ -2,10 +2,7 @@ package com.barryzeha.pomodoroapp.common
 
 import android.annotation.SuppressLint
 import android.os.CountDownTimer
-import android.util.Log
-import com.barryzeha.pomodoroapp.MyApp
 import java.util.*
-import javax.security.auth.login.LoginException
 
 /****
  * Project PomodoroApp
@@ -54,7 +51,7 @@ class PomodoroTimer {
         //Seteamos el valor del timer como iniciado
         timerState=TimerState.OnStart
         pomodoroCallback?.timerState(timerState)
-
+        pomodoroCallback?.cycleState(isWorkTime)
 
         timer = object : CountDownTimer(minutesInMillis, 1000) {
             @SuppressLint("SetTextI18n")
@@ -167,6 +164,6 @@ class PomodoroTimer {
         fun onStop(valueForResetUI:Int){}
         fun onFinish(workCyclesNum:Int){}
         fun timerState(timerState:TimerState){}
-
+        fun cycleState(isWorkTime:Boolean){}
     }
 }

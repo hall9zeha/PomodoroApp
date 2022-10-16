@@ -26,40 +26,23 @@ class MainActivity : AppCompatActivity() {
         _bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
         initMainFragment()
-        setUpToolbar()
-        setUpNavigation()
-        //setUpTimer(2,0)
+        //setUpToolbar()
+
+
     }
 
     private fun initMainFragment() {
         supportFragmentManager.beginTransaction()
-            .add(bind.frmLayoutMain.id, MainFragment())
+            //.add(bind.frmLayoutMain.id, MainFragment())
+            .add(bind.frmLayoutMain.id, FragmentTabs())
             .commit()
     }
 
-    private fun setUpToolbar() {
+   /* private fun setUpToolbar() {
         setSupportActionBar(bind.toolbarMain.toolbarMain)
-
     }
+    */
 
-    private fun setUpNavigation() = with(bind) {
-        tabLayoutMain.tabLayoutMain.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.let {
-                    when (it.position) {
-                        0 -> setUpFragments(MainFragment())
-                        1 -> setUpFragments(HistoryFragment())
-                        2 -> setUpFragments(SettingsFragment())
-                    }
-                }
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
-    }
 
     private fun setUpFragments(fragment: Fragment) {
         supportFragmentManager.beginTransaction()

@@ -74,6 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+
         />
     <TextView
         android:layout_width="wrap_content"
@@ -86,6 +87,16 @@
         app:layout_constraintEnd_toEndOf="@id/pbTimer"
         app:layout_constraintTop_toTopOf="@id/pbTimer"
         app:layout_constraintBottom_toBottomOf="@id/pbTimer"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCycleState"
+        tools:text="Trabajando"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/pbTimer"
+        app:layout_constraintEnd_toEndOf="@id/pbTimer"
+        app:layout_constraintTop_toBottomOf="@id/tvMainCycle"
+        android:layout_marginTop="@dimen/common_padding_min"/>
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -114,7 +125,7 @@
         app:layout_constraintStart_toEndOf="@id/btnStop"
         app:layout_constraintTop_toBottomOf="@id/pbTimer"
         app:layout_constraintEnd_toStartOf="@id/btnNext"
-        android:layout_marginTop="@dimen/common_padding_default"
+        android:layout_marginTop="@dimen/common_padding_middle"
         />
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"

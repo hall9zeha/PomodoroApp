@@ -1,12 +1,8 @@
 package com.barryzeha.pomodoroapp.common
 
-import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
-import android.widget.Button
 import android.widget.ImageView
-import com.barryzeha.pomodoroapp.R
-import com.barryzeha.pomodoroapp.databinding.FragmentMainBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 

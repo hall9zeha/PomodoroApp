@@ -3,13 +3,10 @@ package com.barryzeha.pomodoroapp.common.services
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
-import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
-import android.widget.Toast
 import com.barryzeha.pomodoroapp.common.PomodoroTimer
 import com.barryzeha.pomodoroapp.common.TimerState
-import kotlinx.coroutines.*
 
 /****
  * Project PomodoroApp
@@ -70,7 +67,10 @@ class MyBackgroundService: Service() {
                 clientCallback?.timerState(timerState)
             }
 
-
+            override fun cycleState(isWorkTime: Boolean) {
+                super.cycleState(isWorkTime)
+                clientCallback?.cycleState(isWorkTime)
+            }
         }
     }
     fun registerOnPomodoroListener(callback: PomodoroTimer.PomodoroTimerListener) {

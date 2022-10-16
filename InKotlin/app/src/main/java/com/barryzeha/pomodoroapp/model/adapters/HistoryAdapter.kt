@@ -61,7 +61,8 @@ class HistoryAdapter(private val onDelete:(task:TaskModel)->Unit) : RecyclerView
         fun onBind(task: TaskModel, onDelete: (task: TaskModel) -> Unit)=with(bind){
             tvTaskName.text=task.taskName
             tvCreateTask.text="${root.context.getString(R.string.created)} ${Helpers.convertTimeInMillisToDate(task.initTaskTimestamp)}"
-            tvEndTask.text=Helpers.convertTimeInMillisToDate(task.endTaskTimestamp)
+            tvEndTask.text="${root.context.getString(R.string.finalized)} ${Helpers.convertTimeInMillisToDate(task.endTaskTimestamp)}"
+
             tvCyclesCompleted.text="${root.context.getString(R.string.completedCycles)} ${task.totalCycles}"
             tvFocusedTime.text="${root.context.getString(R.string.focusedTime)} ${Helpers.convertTimeInMillisToTimeFormat(task.totalTime)}"
             ivTaskLemon.loadUrl(R.drawable.lemon2)

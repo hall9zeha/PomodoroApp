@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvTaskName"
             tools:text="Nombre de la tarea"
+            style="@style/tvHistoryStyle"
             android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/ivTaskLemon"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvCreateTask"
             tools:text="Tarea creada: 12/10/2022"
+            style="@style/tvHistoryStyle"
             app:layout_constraintStart_toEndOf="@id/ivTaskLemon"
             app:layout_constraintTop_toBottomOf="@id/tvTaskName"
             android:layout_marginStart="@dimen/common_padding_default"
@@ -50,6 +52,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvEndTask"
             tools:text="fianalizado 12/10/2022"
+            style="@style/tvHistoryStyle"
             app:layout_constraintStart_toEndOf="@id/ivTaskLemon"
             app:layout_constraintTop_toBottomOf="@id/tvCreateTask"
             android:layout_marginStart="@dimen/common_padding_default"/>
@@ -58,6 +61,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvCyclesCompleted"
             tools:text="Ciclos completados 4"
+            style="@style/tvHistoryStyle"
             app:layout_constraintStart_toStartOf="@id/tvCreateTask"
             app:layout_constraintTop_toBottomOf="@id/tvEndTask"
             />
@@ -65,6 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvFocusedTime"
+            style="@style/tvHistoryStyle"
             tools:text="Tiempo total empleado: 25:00"
             app:layout_constraintStart_toStartOf="@id/tvCyclesCompleted"
             app:layout_constraintTop_toBottomOf="@id/tvCyclesCompleted"/>
