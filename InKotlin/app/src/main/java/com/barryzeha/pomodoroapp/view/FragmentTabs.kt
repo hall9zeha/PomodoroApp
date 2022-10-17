@@ -35,7 +35,9 @@ class FragmentTabs : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter=ViewPagerAdapter(requireActivity().supportFragmentManager,lifecycle)
+        val adapter=ViewPagerAdapter(childFragmentManager,lifecycle)
+
+        bind.viewPagerMain.offscreenPageLimit=3
         bind.viewPagerMain.adapter=adapter
         TabLayoutMediator(bind.tabLayoutMain.tabLayoutMain, bind.viewPagerMain) { tab, position ->
             when(position){

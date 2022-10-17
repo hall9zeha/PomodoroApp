@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="addNewTask">Nueva tarea</string>
-    <string name="addOneTask">Dale nombre a la tarea</string>
-    <string name="createTask">Crear</string>
-    <string name="cancel">Cancelar</string>
-    <string name="workAndbreak">Tiempo de trabajos y descansos</string>
-    <string name="CycleWorkTime">Tiempo ciclo de trabajo(Minutos)</string>
-    <string name="CycleBreakTime">Tiempo de ciclo de descanso(minutos)</string>
-    <string name="lastCycleTime">Timpo del último ciclo(minutos)</string>
-    <string name="workCycles">Ciclos de trabajo</string>
-    <string name="numCyclesWork">Ciclos de trabajo</string>
-    <string name="youAlreagyTask">Ya hay una tarea ejecutándose</string>
-    <string name="firtAddOneTask">Primero agrega una tarea</string>
-    <string name="completedCycles">"ciclos completados: "</string>
-    <string name="created">Creada:</string>
-    <string name="focusedTime">"Tiempo empleado: "</string>
-    <string name="deleteAll">Borrar todo?</string>
-    <string name="yes">Si</string>
+    <string name="addNewTask">New homework</string>
+    <string name="addOneTask">Give the task a name</string>
+    <string name="createTask">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="workAndbreak">Work and break time</string>
+    <string name="CycleWorkTime">Duty Cycle Time(Minutes)</string>
+    <string name="CycleBreakTime">Rest cycle time(minutes)</string>
+    <string name="lastCycleTime">Last cycle time(minutes)</string>
+    <string name="workCycles">Work cycles</string>
+    <string name="numCyclesWork">Work cycles</string>
+    <string name="youAlreagyTask">There is already a task running</string>
+    <string name="firtAddOneTask">First add a task</string>
+    <string name="completedCycles">Completed cycles:</string>
+    <string name="created">Created:</string>
+    <string name="focusedTime">Time spent:</string>
+    <string name="deleteAll">Clear all</string>
+    <string name="yes">Yes</string>
     <string name="notification_channel_id">Lemodoro channel</string>
     <string name="notification_title">Lemodoro task</string>
-    <string name="notification_action">Vamos</string>
+    <string name="notification_action">Go</string>
 
     <string name="channel_name">LemodoroCh</string>
-    <string name="goRest">Tomate un descanso</string>
-    <string name="goWork">A trabajar esclavo</string>
-    <string name="finalized">Finalizado: </string>
-    <string name="working">Trabajando</string>
-    <string name="rest">Descansando</string>
+    <string name="goRest">Take a rest</string>
+    <string name="goWork">To work slave</string>
+    <string name="finalized">Finalized:</string>
+    <string name="working">Working</string>
+    <string name="rest">Resting</string>
+    <string name="minutes">minutes</string>
+    <string name="cyclesText">" cycles"</string>
 </resources>

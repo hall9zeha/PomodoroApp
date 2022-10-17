@@ -26,6 +26,7 @@ import com.barryzeha.pomodoroapp.model.TaskModel
 import com.barryzeha.pomodoroapp.viewModel.HistoryViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
+import kotlin.time.Duration.Companion.minutes
 
 
 class MainFragment : Fragment(),ServiceConnection {
@@ -47,6 +48,7 @@ class MainFragment : Fragment(),ServiceConnection {
     private var isBound=false
     private var myService:MyBackgroundService?=null
     private var pomodoro:PomodoroTimer?=null
+    private var workTime=true
 
 
     private var callBackTimer=object :PomodoroTimer.PomodoroTimerListener {
@@ -61,6 +63,7 @@ class MainFragment : Fragment(),ServiceConnection {
             bind?.tvWorkCycle?.text= valueForResetUI.toString()
             bind?.tvMainCycle?.text=Helpers.convertTimeInMillisToTimeFormat(valueForResetUI.toLong())
             bind?.pbTimer?.progress=valueForResetUI
+            bind?.tvCycleState?.text=""
         }
           override fun onFinish(workCyclesNum: Int) {
             super.onFinish(workCyclesNum)
@@ -73,6 +76,7 @@ class MainFragment : Fragment(),ServiceConnection {
 
         override fun cycleState(isWorkTime: Boolean) {
             super.cycleState(isWorkTime)
+            workTime=isWorkTime
             if(isWorkTime){
                 bind?.tvCycleState?.text=getString(R.string.working)
             }
@@ -119,12 +123,12 @@ class MainFragment : Fragment(),ServiceConnection {
                 }
                 TimerState.CompletedTask-> {
                     Toast.makeText(context, "A descansar", Toast.LENGTH_SHORT).show()
-                    //Helpers.sendNotification(getString(R.string.goRest))
+                    Helpers.sendNotification("${getString(R.string.goRest)}  ${MyApp.prefsDefault.getInt("breakTime",15)} ${getString(R.string.minutes)} ",workTime)
                 }
 
                 TimerState.CompletedBreak->{
                     Toast.makeText(context, "A trabajar", Toast.LENGTH_SHORT).show()
-                    //Helpers.sendNotification(getString(R.string.goWork))
+                    Helpers.sendNotification(getString(R.string.goWork) ,workTime)
                 }
                 else->{}
             }
@@ -135,6 +139,8 @@ class MainFragment : Fragment(),ServiceConnection {
     private fun setUpListeners()=with(bind) {
         this?.let{ bind->
             btnStart.setOnClickListener {
+                val workTimerValue=MyApp.prefsDefault.getInt("workTime",25)
+
                 when (myService?.pomodoro?.timerState) {
                     TimerState.NotStarted -> {
                         if (!haveATask) {
@@ -149,7 +155,7 @@ class MainFragment : Fragment(),ServiceConnection {
                             myService?.pomodoro?.workCyclesNum=MyApp.prefsDefault.getInt("numCycles",4)!!.toInt()
                             myService?.pomodoro?.breakCyclesNum=MyApp.prefsDefault.getInt("numCycles",4)!!.toInt()
 
-                            myService?.pomodoro?.startTimer(0, 10)
+                            myService?.pomodoro?.startTimer(workTimerValue)
                         }
                     }
                     TimerState.OnStart -> {
@@ -158,7 +164,7 @@ class MainFragment : Fragment(),ServiceConnection {
                         pomodoro?.pomodoroCallback?.timerState(TimerState.OnPause)
                     }
                     TimerState.OnPause -> {
-                        myService?.pomodoro?.startTimer(0, 10)
+                        myService?.pomodoro?.startTimer( workTimerValue)
                         myService?.pomodoro?.timerState = TimerState.OnStart
                         pomodoro?.pomodoroCallback?.timerState(TimerState.OnStart)
                     }

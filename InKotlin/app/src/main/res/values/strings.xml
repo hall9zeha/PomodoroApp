@@ -29,7 +29,7 @@
     <string name="numCyclesWork">Ciclos de trabajo</string>
     <string name="youAlreagyTask">Ya hay una tarea ejecutándose</string>
     <string name="firtAddOneTask">Primero agrega una tarea</string>
-    <string name="completedCycles">"ciclos completados: "</string>
+    <string name="completedCycles">"Ciclos completados: "</string>
     <string name="created">Creada: </string>
     <string name="focusedTime">"Tiempo empleado: "</string>
     <string name="deleteAll">Borrar todo?</string>
@@ -44,4 +44,7 @@
     <string name="finalized">Finalizada: </string>
     <string name="working">Trabajando</string>
     <string name="rest">Descansando</string>
+    <string name="workChannelId">WorkChannel</string>
+    <string name="breakChannelId">BreakChannel</string>
+    <string name="minutes">minutos</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import com.barryzeha.pomodoroapp.MyApp
 import com.barryzeha.pomodoroapp.common.PomodoroTimer
 import com.barryzeha.pomodoroapp.common.TimerState
 
@@ -31,9 +32,10 @@ class MyBackgroundService: Service() {
 
 
        //instanciamos la clase del timer
+       val workTimeValue=MyApp.prefsDefault.getInt("workTime",25)
        pomodoro=PomodoroTimer()
        initPomodoroListener()
-       pomodoro?.startTimer(0,10)
+       pomodoro?.startTimer(workTimeValue)
 
        Log.d("MY-SERVICE", "Servicio conectado")
         return START_NOT_STICKY

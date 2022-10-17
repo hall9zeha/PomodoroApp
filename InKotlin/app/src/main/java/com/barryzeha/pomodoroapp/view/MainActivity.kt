@@ -25,28 +25,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
-        initMainFragment()
-        //setUpToolbar()
+        //initMainFragment()
+        if(savedInstanceState==null) {
+            initMainFragment()
+        }
 
 
     }
 
     private fun initMainFragment() {
+
         supportFragmentManager.beginTransaction()
-            //.add(bind.frmLayoutMain.id, MainFragment())
             .add(bind.frmLayoutMain.id, FragmentTabs())
             .commit()
     }
 
-   /* private fun setUpToolbar() {
-        setSupportActionBar(bind.toolbarMain.toolbarMain)
-    }
-    */
 
 
-    private fun setUpFragments(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(bind.frmLayoutMain.id, fragment)
-            .commit()
-    }
+
+
+
 }

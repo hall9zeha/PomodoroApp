@@ -2,9 +2,10 @@ package com.barryzeha.pomodoroapp.common.util
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
+import android.content.ContentResolver
 import android.graphics.Color
 import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.core.content.ContextCompat
@@ -20,6 +21,9 @@ import java.util.concurrent.TimeUnit
  * Copyright (c)  All rights reserved.
  ***/
 object Helpers {
+    private  val WORK_CHANNEL_NOTIFY=MyApp.context.getString(R.string.workChannelId)
+    private  val BREAK_CHANNEL_NOTIFY=MyApp.context.getString(R.string.breakChannelId)
+
     var  notificationManager:NotificationManager?=null
     fun convertTimeInMillisToDate(timeInMillis:Long):String{
         val timeFormat=SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
@@ -34,29 +38,50 @@ object Helpers {
 
     }
     fun createNotificationChannel(channelId:String, channelName:String){
+
+
+        val   workTimeSoundUri= Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +"://"+ MyApp.context.packageName +"/raw/"+ "nuclear_alarm")
+        val   breakTimeSoundUri= Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +"://" + MyApp.context.packageName+"/raw/"+ "alarm_clock")
+
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val notificationChannel = NotificationChannel(
-                channelId,channelName,NotificationManager.IMPORTANCE_LOW
+            val workNotificationChannel = NotificationChannel(
+                WORK_CHANNEL_NOTIFY,channelName,NotificationManager.IMPORTANCE_LOW
             )
+            val breakNotificationChannel=NotificationChannel(
+                BREAK_CHANNEL_NOTIFY,channelName,NotificationManager.IMPORTANCE_LOW
+            )
+
            val audioAttributes = AudioAttributes.Builder()
-               .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+               .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                .build()
 
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.GREEN
-            notificationChannel.enableVibration(true)
-            notificationChannel.description = MyApp.context.getString(R.string.app_name)
-            notificationChannel.importance = NotificationManager.IMPORTANCE_DEFAULT
-            notificationChannel.setSound(Settings.System.DEFAULT_RINGTONE_URI, audioAttributes)
+            workNotificationChannel.enableLights(true)
+            workNotificationChannel.lightColor = Color.GREEN
+            workNotificationChannel.enableVibration(true)
+            workNotificationChannel.description = MyApp.context.getString(R.string.app_name)
+            workNotificationChannel.importance = NotificationManager.IMPORTANCE_DEFAULT
+            workNotificationChannel.setSound(Settings.System.DEFAULT_RINGTONE_URI, audioAttributes)
+            workNotificationChannel.setSound(workTimeSoundUri, audioAttributes)
+
+            breakNotificationChannel.enableLights(true)
+            breakNotificationChannel.lightColor = Color.YELLOW
+            breakNotificationChannel.enableVibration(true)
+            breakNotificationChannel.description = MyApp.context.getString(R.string.app_name)
+            breakNotificationChannel.importance = NotificationManager.IMPORTANCE_DEFAULT
+            breakNotificationChannel.setSound(Settings.System.DEFAULT_RINGTONE_URI, audioAttributes)
+            breakNotificationChannel.setSound(breakTimeSoundUri, audioAttributes)
 
             val notificationManager = MyApp.context.getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(notificationChannel)
+            notificationManager.createNotificationChannel(workNotificationChannel)
+            notificationManager.createNotificationChannel(breakNotificationChannel)
+
         }
     }
-    fun sendNotification(message:String){
+    fun sendNotification(message:String,workTime:Boolean){
         notificationManager = ContextCompat.getSystemService(MyApp.context, NotificationManager::class.java) as NotificationManager
 
         notificationManager?.cancelNotifications()
-        notificationManager?.sendNotification(message,MyApp.context)
+        notificationManager?.sendNotification(message,MyApp.context,workTime)
     }
 }

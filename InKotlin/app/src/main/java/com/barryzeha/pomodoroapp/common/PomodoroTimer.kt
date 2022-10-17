@@ -2,6 +2,7 @@ package com.barryzeha.pomodoroapp.common
 
 import android.annotation.SuppressLint
 import android.os.CountDownTimer
+import com.barryzeha.pomodoroapp.MyApp
 import java.util.*
 
 /****
@@ -26,25 +27,25 @@ class PomodoroTimer {
 
 
 
-    fun startTimer(minutes:Int, seconds:Int){
+    fun startTimer( timeMinutes:Int){
         //usamos esta constante para sacar el porcentaje del progress bar
         //ya que al no variar dentro del temporizador podremos pausar y reanudar el progressbar correctamente
-        val initialTimeOfCycle=((seconds * 1000) + 1000).toLong()
+        val initialTimeOfCycle=((timeMinutes * 60 * 1000) + 1000).toLong()
         //***********************************************************
 
-        var minutesInMillis: Long=((seconds *1000) + 1000).toLong()
+        var minutesInMillis: Long=((timeMinutes * 60 * 1000) + 1000).toLong()
 
         when(timerState){
-            TimerState.NotStarted -> minutesInMillis= ((seconds *1000 + 1000)).toLong()
+            TimerState.NotStarted -> minutesInMillis= ((timeMinutes * 60 * 1000 + 1000)).toLong()
             TimerState.OnPause -> {
                 minutesInMillis = if(breakCyclesNum>0){
                     timeResume
                 } else{
-                    ((seconds *1000 + 1000)).toLong()
+                    ((timeMinutes * 60 * 1000 + 1000)).toLong()
                 }
 
             }
-            TimerState.OnStart ->minutesInMillis= ((seconds *1000 + 1000)).toLong()
+            TimerState.OnStart ->minutesInMillis= ((timeMinutes * 60 * 1000 + 1000)).toLong()
             else->{}
         }
 
@@ -79,8 +80,8 @@ class PomodoroTimer {
                 }
                 else{
                     totalTime -= timeResume
-                   endTimestamp= Calendar.getInstance().timeInMillis
-                   timerState= TimerState.OnStop
+                    endTimestamp= Calendar.getInstance().timeInMillis
+                    timerState= TimerState.OnStop
                     pomodoroCallback?.timerState(timerState)
 
                     initValues()
@@ -101,19 +102,20 @@ class PomodoroTimer {
         }
     }
     private fun initTimer(){
-
+        val workTime=MyApp.prefsDefault.getInt("workTime",25)
+        val breakTime=MyApp.prefsDefault.getInt("breakTime",5)
+        val lastBreakTime=MyApp.prefsDefault.getInt("breakLastTime",10)
         if(isWorkTime){
             //Seteamos es valor del enum para que el observador en el fragment sepa que mensaje mostrar
-            pomodoroCallback?.timerState(TimerState.CompletedBreak)
-            startTimer(0,10)
+            startTimer(workTime)
             isWorkTime=true
+            pomodoroCallback?.timerState(TimerState.CompletedBreak)
         }
         else {
             //Seteamos es valor del enum para que el observador en el fragment sepa que mensaje mostrar
-            pomodoroCallback?.timerState(TimerState.CompletedTask)
-            if(workCyclesNum == 0)startTimer(0,7) else startTimer(0,5)
-
+            if(workCyclesNum == 0)startTimer(lastBreakTime) else startTimer(breakTime)
             isWorkTime=false
+            pomodoroCallback?.timerState(TimerState.CompletedTask)
         }
 
     }
