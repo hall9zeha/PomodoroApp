@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    tools:background="?attr/colorSurface"
     tools:context=".view.MainActivity">
 
     <TextView
@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvWorkCyclesTitle"
         android:text="@string/cyclesText"
+        android:textStyle="bold"
         android:layout_marginBottom="@dimen/common_padding_min"
         app:layout_constraintStart_toStartOf="@id/ivWorkCycle"
         app:layout_constraintEnd_toEndOf="@id/ivWorkCycle"
@@ -53,7 +54,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      android:layout_marginTop="@dimen/common_padding_default"
+      android:layout_marginTop="@dimen/common_padding_middle"
      android:layout_marginEnd="@dimen/common_padding_min"
       android:layout_marginStart="@dimen/common_padding_min"
       />
@@ -83,6 +84,7 @@
         tools:text="25:00"
         android:textStyle="bold"
         android:textSize="32sp"
+        android:textColor="@color/colorTextTimerMain"
         app:layout_constraintStart_toStartOf="@id/pbTimer"
         app:layout_constraintEnd_toEndOf="@id/pbTimer"
         app:layout_constraintTop_toTopOf="@id/pbTimer"
@@ -92,6 +94,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvCycleState"
         tools:text="Trabajando"
+        android:textColor="@color/colorTextTimerMain"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/pbTimer"
         app:layout_constraintEnd_toEndOf="@id/pbTimer"
@@ -141,7 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fab_add_task"
-        app:backgroundTint="@color/green_700"
+
         android:src="@drawable/ic_add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

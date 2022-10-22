@@ -1,50 +1,42 @@
 <resources>
-    <string name="app_name">Lemodoro</string>
-    <string name="cyclesText">Ciclos</string>
+    <string name="app_name" translatable="false">Lemodoro</string>
+    <string name="cyclesText">Cycles</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="addNewTask">Nueva tarea</string>
-    <string name="addOneTask">Dale nombre a la tarea</string>
-    <string name="createTask">Crear</string>
-    <string name="cancel">Cancelar</string>
-    <string name="workAndbreak">Tiempo de trabajos y descansos</string>
-    <string name="CycleWorkTime">Ciclo de trabajo(Minutos)</string>
-    <string name="CycleBreakTime">Ciclo de descanso(minutos)</string>
-    <string name="lastCycleTime">Último ciclo de descanso(minutos)</string>
-    <string name="workCycles">Ciclos de trabajo</string>
-    <string name="numCyclesWork">Ciclos de trabajo</string>
-    <string name="youAlreagyTask">Ya hay una tarea ejecutándose</string>
-    <string name="firtAddOneTask">Primero agrega una tarea</string>
-    <string name="completedCycles">"Ciclos completados: "</string>
-    <string name="created">Creada: </string>
-    <string name="focusedTime">"Tiempo empleado: "</string>
-    <string name="deleteAll">Borrar todo?</string>
-    <string name="yes">Si</string>
+    <string name="addNewTask">New task</string>
+    <string name="addOneTask">Give the task a name</string>
+    <string name="createTask">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="workAndBreak">Work and break time</string>
+    <string name="CycleWorkTime">duty cycle length(Minutes)</string>
+    <string name="CycleBreakTime">Rest cycle length(minutes)</string>
+    <string name="lastCycleTime">Last cycle length(minutes)</string>
+    <string name="workCycles">Work cycles</string>
+    <string name="numCyclesWork">Work cycles  num</string>
+    <string name="youAlreadyTask">There is already a task running</string>
+    <string name="firstAddOneTask">First add a task</string>
+    <string name="completedCycles">Completed cycles:</string>
+    <string name="created">Created:</string>
+    <string name="focusedTime">Time spent:</string>
+    <string name="deleteAll">Clear all</string>
+    <string name="yes">Yes</string>
     <string name="notification_channel_id">Lemodoro channel</string>
     <string name="notification_title">Lemodoro task</string>
-    <string name="notification_action">Vamos</string>
+    <string name="notification_action">Go</string>
 
     <string name="channel_name">LemodoroCh</string>
-    <string name="goRest">Tomate un descanso</string>
-    <string name="goWork">A trabajar esclavo</string>
-    <string name="finalized">Finalizada: </string>
-    <string name="working">Trabajando</string>
-    <string name="rest">Descansando</string>
-    <string name="workChannelId">WorkChannel</string>
-    <string name="breakChannelId">BreakChannel</string>
-    <string name="minutes">minutos</string>
+    <string name="goRest">Take a rest</string>
+    <string name="goWork">let\'s get back to work</string>
+    <string name="finalized">Finalized:</string>
+    <string name="working">Working</string>
+    <string name="rest">Resting</string>
+    <string name="minutes">minutes</string>
+    <string name="workChannelId" translatable="false">WorkChannel</string>
+    <string name="breakChannelId" translatable="false">BreakChannel</string>
+    <string name="aboutThis">About this</string>
+    <string name="aboutThisMsg">Lemodoro App application that uses the pomodoro technique, to manage and optimize our time. \n\n Developed for Barry Zea H. </string>
+    <string name="ok">Ok</string>
+    <string name="aboutThisTitle">about this Lemodoro app</string>
+
 </resources>

@@ -35,6 +35,7 @@ class PomodoroTimer {
 
         var minutesInMillis: Long=((timeMinutes * 60 * 1000) + 1000).toLong()
 
+
         when(timerState){
             TimerState.NotStarted -> minutesInMillis= ((timeMinutes * 60 * 1000 + 1000)).toLong()
             TimerState.OnPause -> {
@@ -67,7 +68,7 @@ class PomodoroTimer {
 
             override fun onFinish() {
 
-                totalTime= (totalTime + minutesInMillis) - 1000
+                totalTime= (totalTime + initialTimeOfCycle) - 1000
                 timeResume -= 1000
                 switchWorkAndBreakCycle()
 

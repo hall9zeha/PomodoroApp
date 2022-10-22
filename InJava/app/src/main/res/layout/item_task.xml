@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardTaskItem"
+    android:layout_margin="@dimen/common_padding_min"
+    android:padding="@dimen/common_padding_default"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/common_padding_min"
+        >
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/ivTaskLemon"
+            tools:src="@drawable/lemon2"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTaskName"
+            tools:text="Nombre de la tarea"
+            style="@style/tvHistoryStyle"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/ivTaskLemon"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/common_padding_default"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvCreateTask"
+            tools:text="Tarea creada: 12/10/2022"
+            style="@style/tvHistoryStyle"
+            app:layout_constraintStart_toEndOf="@id/ivTaskLemon"
+            app:layout_constraintTop_toBottomOf="@id/tvTaskName"
+            android:layout_marginStart="@dimen/common_padding_default"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvEndTask"
+            tools:text="fianalizado 12/10/2022"
+            style="@style/tvHistoryStyle"
+            app:layout_constraintStart_toEndOf="@id/ivTaskLemon"
+            app:layout_constraintTop_toBottomOf="@id/tvCreateTask"
+            android:layout_marginStart="@dimen/common_padding_default"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvCyclesCompleted"
+            tools:text="Ciclos completados 4"
+            style="@style/tvHistoryStyle"
+            app:layout_constraintStart_toStartOf="@id/tvCreateTask"
+            app:layout_constraintTop_toBottomOf="@id/tvEndTask"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvFocusedTime"
+            style="@style/tvHistoryStyle"
+            tools:text="Tiempo total empleado: 25:00"
+            app:layout_constraintStart_toStartOf="@id/tvCyclesCompleted"
+            app:layout_constraintTop_toBottomOf="@id/tvCyclesCompleted"/>
+        <ImageView
+            android:layout_width="@dimen/common_padding_high"
+            android:layout_height="@dimen/common_padding_high"
+            android:id="@+id/ivDelete"
+            android:src="@drawable/ic_delete"
+            app:tint="@color/green_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="@dimen/common_padding_min"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

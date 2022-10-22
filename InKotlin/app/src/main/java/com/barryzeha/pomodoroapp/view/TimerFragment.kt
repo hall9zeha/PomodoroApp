@@ -26,7 +26,6 @@ import com.barryzeha.pomodoroapp.model.TaskModel
 import com.barryzeha.pomodoroapp.viewModel.HistoryViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
-import kotlin.time.Duration.Companion.minutes
 
 
 class MainFragment : Fragment(),ServiceConnection {
@@ -122,12 +121,12 @@ class MainFragment : Fragment(),ServiceConnection {
                     Helpers.notificationManager?.cancelAll()
                 }
                 TimerState.CompletedTask-> {
-                    Toast.makeText(context, "A descansar", Toast.LENGTH_SHORT).show()
+
                     Helpers.sendNotification("${getString(R.string.goRest)}  ${MyApp.prefsDefault.getInt("breakTime",15)} ${getString(R.string.minutes)} ",workTime)
                 }
 
                 TimerState.CompletedBreak->{
-                    Toast.makeText(context, "A trabajar", Toast.LENGTH_SHORT).show()
+
                     Helpers.sendNotification(getString(R.string.goWork) ,workTime)
                 }
                 else->{}
@@ -146,7 +145,7 @@ class MainFragment : Fragment(),ServiceConnection {
                         if (!haveATask) {
                             Toast.makeText(
                                 context,
-                                activity?.getString(R.string.firtAddOneTask),
+                                activity?.getString(R.string.firstAddOneTask),
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
@@ -184,7 +183,7 @@ class MainFragment : Fragment(),ServiceConnection {
             fabAddTask.setOnClickListener{
 
                 if(myService?.pomodoro?.workCyclesNum!! > 0){
-                    Toast.makeText(context, activity?.getString(R.string.youAlreagyTask), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, activity?.getString(R.string.youAlreadyTask), Toast.LENGTH_SHORT).show()
                 }else{
                 addNewTaskDialog()}
 
@@ -206,9 +205,6 @@ class MainFragment : Fragment(),ServiceConnection {
         timeOfCycleBreak=MyApp.prefsDefault.getInt("breakTime",5)!!.toInt()
         workCyclesNum=MyApp.prefsDefault.getInt("numCycles",4)!!.toInt()
         timeOfLastBreakCycle=MyApp.prefsDefault.getInt("breakLastTime",15)!!.toInt()
-        breakCyclesNum=workCyclesNum - 1
-
-
     }
     private fun saveHistoryTask(){
 

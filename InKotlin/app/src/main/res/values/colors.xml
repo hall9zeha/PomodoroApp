@@ -9,6 +9,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E61818</color>
+    <color name="colorTextTimerMain">#555550</color>
 
     <color name="primaryTextColor">#000000</color>
 </resources>

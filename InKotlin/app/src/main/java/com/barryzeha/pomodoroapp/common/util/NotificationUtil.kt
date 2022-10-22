@@ -37,7 +37,7 @@ fun NotificationManager.sendNotification(message:String , context:Context, workT
 
     val alarm: Uri =RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
     var builder:NotificationCompat.Builder?=null
-    //!worktime porque la primera vez será true y la segunda vez sera falso así que deberá
+
     builder = if(workTime){
         NotificationCompat.Builder(context,context.getString(R.string.workChannelId))
     }
