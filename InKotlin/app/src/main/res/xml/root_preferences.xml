@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="@string/workAndbreak"
+    <PreferenceCategory app:title="@string/workAndBreak"
         app:iconSpaceReserved="false">
 
         <SeekBarPreference
@@ -50,6 +50,15 @@
             />
 
 
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:title="@string/aboutThis"
+        app:iconSpaceReserved="false">
+        <Preference
+            app:iconSpaceReserved="false"
+            app:title="@string/aboutThisTitle"
+            android:key="aboutThis"
+            app:summary="version 1.0"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
