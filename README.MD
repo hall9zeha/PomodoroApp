@@ -1,6 +1,21 @@
 # PomodoroApp
+<img src="https://github.com/hall9zeha/PomodoroApp/blob/main/InKotlin/app/src/debug/ic_launcher-playstore.png" align="left"
+width="20%" hspace="10" vspace="10">
 
-Aplicación de gestión de tareas usando la técnica(Pomodoro) desarrollada en Android Studio con Kotlin. 
+Aplicación de gestión de tareas usando la técnica(Pomodoro) desarrollada en Android Studio escrita en  Kotlin y Java. 
+
+<p align="left">
+<a href="https://play.google.com/store/apps/details?id=com.barryzeha.pomodoroapp">
+    <img alt="Get it on Google Play"
+        height="80"
+        src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
+</a>  
+
+<br />
+<br />
+<br />
+
+
 
 ## Se utilizó :gear:
 
