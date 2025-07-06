@@ -13,6 +13,10 @@ Aplicación de gestión de tareas usando la técnica(Pomodoro) desarrollada en A
         src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
 </a>  
 
+## Importante:
+Debido a las estrictas restricciones de las últimas versiones de Android y de muchos fabricantes con respecto a los servicios en segundo plano, es necesario desactivar la optimización de batería o las restricciones de uso de batería para esta aplicación.
+Esto asegurará que los servicios en segundo plano funcionen correctamente y no sean detenidos automáticamente por el sistema cuando el dispositivo entre en modo de suspensión o la aplicación pase a segundo plano.
+
 ## Se utilizó :gear:
 
 * [Room database](https://developer.android.com/jetpack/androidx/releases/room?gclid=EAIaIQobChMIh-Hoi7C_-gIVRxXUAR2kZAAsEAAYASAAEgJnivD_BwE&gclsrc=aw.ds)
