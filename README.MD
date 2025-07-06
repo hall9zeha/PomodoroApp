@@ -5,7 +5,7 @@ width="20%" hspace="10" vspace="10">
 </br>
 Aplicación de gestión de tareas usando la técnica(Pomodoro) desarrollada en Android Studio con Kotlin. 
 [Lemodoro](https://play.google.com/store/apps/details?id=com.barryzeha.pomodoroapp) está disponible en  Google Play Store.
-
+</br>
 <p align="left">
 <a href="https://play.google.com/store/apps/details?id=com.barryzeha.pomodoroapp">
     <img alt="Get it on Google Play"
