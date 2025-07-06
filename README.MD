@@ -1,6 +1,6 @@
 # PomodoroApp
 
-<img src="https://github.com/hall9zeha/PomodoroApp/blob/main/InKotlin/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" align="left"
+<img src="https://github.com/hall9zeha/PomodoroApp/blob/main/InKotlin/app/src/main/ic_launcher-playstore.png" align="left"
 width="20%" hspace="10" vspace="10">
 </br>
 Aplicación de gestión de tareas usando la técnica(Pomodoro) desarrollada en Android Studio con Kotlin. 
