@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green_200">#FFe4ff54</color>
+    <color name="green_500">#FFaeea00</color>
+    <color name="lemonProgressColor">#99aeea00</color>
+    <color name="green_700">#ff79b700</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#E61818</color>
+    <color name="colorTextTimerMain">#555550</color>
+    <color name="primaryTextColor">#000000</color>
+</resources>

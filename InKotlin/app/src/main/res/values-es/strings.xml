@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cyclesText">Ciclos</string>
+    <string name="addNewTask">Nueva tarea</string>
+    <string name="addOneTask">Dale nombre a la tarea</string>
+    <string name="createTask">Crear</string>
+    <string name="cancel">Cancelar</string>
+    <string name="notShowAgain">No mostrar nuevamente</string>
+    <string name="workAndBreak">Tiempo de trabajos y descansos</string>
+    <string name="CycleWorkTime">Ciclo de trabajo(minutos)</string>
+    <string name="CycleBreakTime">Ciclo de descanso(minutos)</string>
+    <string name="lastCycleTime">Último ciclo de descanso(minutos)</string>
+    <string name="workCycles">Número de ciclos de trabajo</string>
+    <string name="numCyclesWork">Ciclos de trabajo</string>
+    <string name="youAlreadyTask">Ya hay una tarea ejecutándose</string>
+    <string name="firstAddOneTask">Primero agrega una tarea</string>
+    <string name="completedCycles">"Ciclos completados: "</string>
+    <string name="created">Creada: </string>
+    <string name="focusedTime">"Tiempo empleado: "</string>
+    <string name="deleteAll">Borrar todo?</string>
+    <string name="yes">Si</string>
+    <string name="notification_channel_id">Lemodoro channel</string>
+    <string name="notification_title">Lemodoro task</string>
+    <string name="notification_action">Vamos</string>
+
+    <string name="channel_name">LemodoroCh</string>
+    <string name="goRest">Tomate un descanso</string>
+    <string name="goWork">Volvamos a trabajar</string>
+    <string name="finalized">Finalizada: </string>
+    <string name="working">Trabajando</string>
+    <string name="rest">Descansando</string>
+    <string name="workChannelId" translatable="false">WorkChannel</string>
+    <string name="breakChannelId" translatable="false">BreakChannel</string>
+    <string name="defaultChannelId" translatable="false">DefaultChannel</string>
+    <string name="minutes">minutos</string>
+    <string name="aboutThis">Acerca de</string>
+    <string name="aboutThisMsg">Lemodoro App usa la técnica pomodoro, para administrar y optimizar nuestro tiempo. \n\n Desarrollada por Barry Zea H. </string>
+    <string name="ok">Aceptar</string>
+    <string name="aboutThisTitle">Acerca de Lemodoro app</string>
+    <string name="permissionsMsg">Los permisos de notificación son necesarios, por favor actívelos</string>
+    <string name="setting">Configuración</string>
+    <string name="lemodoro_is_active">Lemodoro esta activo</string>
+    <string name="battery_optimization">Optimización de batería</string>
+    <string name="accept">Aceptar</string>
+    <string name="optimization_battery_msg">Para que la app funcione correctamente en segundo plano o con la pantalla apagada, desactive la optimización o restricciones de batería para esta aplicación. De lo contrario, es posible que no reciba las notificaciones a tiempo. Si ya lo hizo presione "No mostrar nuevamente"</string>
+    <string name="saved_history">Saved history</string>
+    <string name="add_one_task">Please write a task</string>
+</resources>

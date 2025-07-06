@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name" translatable="false">Lemodoro</string>
+
+    <string name="workChannelId" translatable="false">WorkChannel</string>
+    <string name="breakChannelId" translatable="false">BreakChannel</string>
+
+    <string name="addNewTask">New task</string>
+    <string name="addOneTask">Give the task a name</string>
+    <string name="createTask">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="workAndBreak">Work and break time</string>
+    <string name="CycleWorkTime">duty cycle length(Minutes)</string>
+    <string name="CycleBreakTime">Rest cycle length(minutes)</string>
+    <string name="lastCycleTime">Last cycle length(minutes)</string>
+    <string name="workCycles">Work cycles</string>
+    <string name="numCyclesWork">Work cycles  num</string>
+    <string name="youAlreadyTask">There is already a task running</string>
+    <string name="firstAddOneTask">First add a task</string>
+    <string name="completedCycles">Completed cycles:</string>
+    <string name="created">Created:</string>
+    <string name="focusedTime">Time spent:</string>
+    <string name="deleteAll">Clear all</string>
+    <string name="yes">Yes</string>
+    <string name="notification_channel_id">Lemodoro channel</string>
+    <string name="notification_title">Lemodoro task</string>
+    <string name="notification_action">Go</string>
+
+    <string name="channel_name">LemodoroCh</string>
+    <string name="goRest">Take a rest</string>
+    <string name="goWork">Let\'s get back to work</string>
+    <string name="finalized">Finalized:</string>
+    <string name="working">Working</string>
+    <string name="rest">Resting</string>
+    <string name="minutes">minutes</string>
+    <string name="cyclesText">"Cycles"</string>
+    <string name="aboutThis">About this</string>
+    <string name="aboutThisMsg">Lemodoro App application that uses the pomodoro technique, to manage and optimize our time. \n\n Developed for Barry Zea H. </string>
+    <string name="ok">Ok</string>
+    <string name="aboutThisTitle">about this Lemodoro app</string>
+    <string name="permissionsMsg">Notification permissions are required, please activate them</string>
+    <string name="setting">Settings</string>
+</resources>
