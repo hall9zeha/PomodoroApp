@@ -26,8 +26,8 @@ Esto asegurará que los servicios en segundo plano funcionen correctamente y no 
 
 ## Screenshots :framed_picture:
 
-<img src="https://github.com/hall9zeha/PomodoroApp/blob/main/screenshots/img1.jpg" alt="drawing" width="35%" height="35%"/> <img src="https://github.com/hall9zeha/PomodoroApp/blob/main/screenshots/img2.jpg" alt="drawing" width="35%" height="35%"/>
+<img src="https://github.com/hall9zeha/PomodoroApp/blob/main/screenshots/img1.jpg" alt="drawing" width="35%"/> <img src="https://github.com/hall9zeha/PomodoroApp/blob/main/screenshots/img2.jpg" alt="drawing" width="35%"/>
 
- <img src="https://github.com/hall9zeha/PomodoroApp/blob/main/screenshots/img3.jpg" alt="drawing" width="35%" height="35%"/> <img src="https://github.com/hall9zeha/PomodoroApp/blob/main/screenshots/img4.jpg" alt="drawing" width="35%" height="35%"/>
+ <img src="https://github.com/hall9zeha/PomodoroApp/blob/main/screenshots/img3.jpg" alt="drawing" width="35%"/> <img src="https://github.com/hall9zeha/PomodoroApp/blob/main/screenshots/img4.jpg" alt="drawing" width="35%"/>
 
  
